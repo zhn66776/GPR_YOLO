@@ -1,55 +1,105 @@
-# GPR Hyperbola Detection using YOLOv5
-This project leverages YOLOv5 to detect hyperbolas in Ground Penetrating Radar (GPR) images — a key step in identifying buried objects like pipelines, utilities, or archaeological remains.
+# 🛰️ GPR Hyperbola Detection using YOLOv5
 
-## Project Structure
-1. The dataset includes 171 GPR scans from-  https://github.com/irenexychen/gpr-data-classifier/tree/master/hyperbola-classifier/images. Theimages are divided in two categories- grey scale images and blue tinted images.
-2. These images were augmented to increase model performance during training, resulting in 3096 images total
-3. The transformed images are trained on yolov5 model using pre trained coco weights
+This project applies **YOLOv5** to detect hyperbolas in Ground Penetrating Radar (GPR) images — a critical step for identifying buried objects such as pipelines, utilities, and archaeological features. Automating hyperbola detection enhances survey accuracy and reduces manual effort in subsurface interpretation.
 
-## Objective
+## 📁 Dataset Overview
 
-Detect hyperbolic signatures in GPR images using object detection. These hyperbolas usually indicate subsurface objects, and automating their detection saves time and reduces manual inspection errors.
+- **Source**: [GPR Dataset by irenexychen](https://github.com/irenexychen/gpr-data-classifier/tree/master/hyperbola-classifier/images)
+- **Original Images**: 171 scans (grayscale and blue-tinted)
+- **Augmented Set**: Expanded to 3096 images via transformations (flipping, noise addition, contrast adjustment, cropping)
+- **Annotation Format**: YOLO (bounding boxes around hyperbolas)
+- **Folder Structure**:
+  
+YOLO-Dataset/
+├── images/
+│ ├── training/
+│ └── validation/
+├── labels/
+│ ├── training/
+│ └── validation/
+└── gpr_data.yaml
+---
 
-## Model Used
+## 🎯 Objective
 
-- **YOLOv5s** (pre-trained on COCO)
-- Trained for **50 epochs**
-- Optimizer: **SGD** with momentum 0.937
-- Batch size: **8**
-- Input size: **256×256**
+To automate the detection of hyperbolic reflections — commonly associated with subsurface targets — using a fast and lightweight object detection model, reducing reliance on manual inspection in GPR imagery analysis.
 
-## Results
+## 🧠 Model Details
 
-| Metric         | Value   |
-|----------------|---------|
-| Precision      | 0.366   |
-| Recall         | 0.263   |
-| mAP@0.5        | 0.210   |
-| mAP@0.5:0.95   | 0.087   |
+- **Model**: YOLOv5s (pretrained on COCO)
+- **Epochs**: 50
+- **Batch Size**: 8
+- **Image Size**: 256×256
+- **Optimizer**: SGD
+- **Momentum**: 0.937
+- **Weight Decay**: 0.0005
 
-YOLOv5 achieved moderate accuracy, suggesting improvement potential through augmentation, more data, or YOLOv7.
+---
 
-## Visualizations
+## 📊 Training & Evaluation Metrics
 
-- `results.png`: Training and validation loss/mAP curves
-- `runs/detect/`: Inference results on test images
-- Visual comparison of predictions and ground truth available in notebooks
+| Metric                | Value   |
+|------------------------|---------|
+| Precision              | 0.366   |
+| Recall                 | 0.263   |
+| mAP@0.5                | 0.210   |
+| mAP@0.5:0.95           | 0.087   |
+| Final Training Loss    | (Logged in `results.csv`) |
+| Final Validation Loss  | (Logged in `results.csv`) |
 
-## How to Run
+> 💡 The results indicate modest performance. Detection quality can be enhanced by increasing dataset diversity, improving label quality, or training with larger models like YOLOv7 or YOLOv8.
 
-1. Upload the dataset in the correct format
-2. Run training:
+## 📈 Visualizations
 
+- **Training Curves**: `runs/train_gpr/yolov5s_gpr/results.png`
+- **Predicted Outputs**: `runs/detect/yolov5_infer/`
+- **Side-by-side Visuals**: Included via matplotlib to compare ground truth vs predicted bounding boxes.
+
+## 🛠️ How to Run
+
+### 1. Clone YOLOv5 Repository
 ```bash
-python train.py --img 256 --batch 8 --epochs 50 \
---data gpr_data.yaml --weights yolov5s.pt --project runs/train_gpr \
---name yolov5s_gpr --exist-ok
-python detect.py --weights best.pt --source images/validation --img 256
+git clone https://github.com/ultralytics/yolov5
+cd yolov5
+pip install -r requirements.txt
 
-## Future Work
-Integrate YOLOv7 for better performance
+**### 2. Train the Model**
+bash
+Copy
+Edit
+python train.py \
+  --img 256 \
+  --batch 8 \
+  --epochs 50 \
+  --data /path/to/gpr_data.yaml \
+  --weights yolov5s.pt \
+  --project runs/train_gpr \
+  --name yolov5s_gpr \
+  --exist-ok
 
-Improve annotations
+**3. Run Inference**
+bash
+Copy
+Edit
+python detect.py \
+  --weights runs/train_gpr/yolov5s_gpr/weights/best.pt \
+  --img 256 \
+  --conf 0.3 \
+  --source /path/to/images/validation \
+  --name yolov5_infer \
+  --save-txt \
+  --exist-ok
 
-Apply domain adaptation for different GPR devices
+****Future Work
+✅ Upgrade to YOLOv7/YOLOv8 for better accuracy and mAP
 
+✅ Expand dataset with real-world noisy GPR samples
+
+✅ Apply domain adaptation techniques across GPR devices
+
+✅ Explore semi-supervised learning to reduce annotation effort
+
+**Acknowledgments**
+Dataset: irenexychen/gpr-data-classifier
+Framework: Ultralytics YOLOv5
+Environment: Google Colab, Python 3.11, CUDA (Tesla T4)
