@@ -55,8 +55,7 @@ To automate the detection of hyperbolic reflections — commonly associated with
 - **Predicted Outputs**: `runs/detect/yolov5_infer/`
 - **Side-by-side Visuals**: Included via matplotlib to compare ground truth vs predicted bounding boxes.
 
-  ![Uploading image.png…]()
-
+  ![image](https://github.com/user-attachments/assets/7d6b05a2-3f06-4869-8b37-44d0c3300e26)
 
 ## 🛠️ How to Run
 
