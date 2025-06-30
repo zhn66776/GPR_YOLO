@@ -57,6 +57,9 @@ To automate the detection of hyperbolic reflections — commonly associated with
 
   ![image](https://github.com/user-attachments/assets/7d6b05a2-3f06-4869-8b37-44d0c3300e26)
 
+  ![image](https://github.com/user-attachments/assets/71a5a73c-bf5a-470f-beab-e348db365c90)
+
+
 ## 🛠️ How to Run
 
 ### 1. Clone YOLOv5 Repository
