@@ -63,15 +63,13 @@ To automate the detection of hyperbolic reflections — commonly associated with
 ## 🛠️ How to Run
 
 ### 1. Clone YOLOv5 Repository
-```bash
+
 git clone https://github.com/ultralytics/yolov5
 cd yolov5
 pip install -r requirements.txt
 
 **### 2. Train the Model**
-bash
-Copy
-Edit
+
 python train.py \
   --img 256 \
   --batch 8 \
@@ -83,9 +81,7 @@ python train.py \
   --exist-ok
 
 **3. Run Inference**
-bash
-Copy
-Edit
+
 python detect.py \
   --weights runs/train_gpr/yolov5s_gpr/weights/best.pt \
   --img 256 \
