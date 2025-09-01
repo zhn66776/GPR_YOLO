@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['hyperbola']
+
+roboflow:
+  workspace: 1-gkye6
+  project: hyperbola-l3oni
+  version: 3
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/1-gkye6/hyperbola-l3oni/dataset/3
